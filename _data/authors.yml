@@ -1,0 +1,14 @@
+Ding:
+  name        : "Ding"
+  bio         : "No Pain No Gain"
+  avatar      : ""
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: ""
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://about.huahuoding.com"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: ""
