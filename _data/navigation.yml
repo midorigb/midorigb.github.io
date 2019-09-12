@@ -10,6 +10,8 @@ main:
     url: /categories/
   - title: "About"
     url: /about/
+  - title: "Docs"
+    url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
 
 foo:
   - title: "Link 1 Title"
