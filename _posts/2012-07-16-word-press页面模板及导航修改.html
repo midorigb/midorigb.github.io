@@ -1,0 +1,43 @@
+---
+layout: post
+status: publish
+published: true
+title: Word Press页面模板及导航修改
+author:
+  display_name: huahuoding
+  login: huahuoding
+  email: dinghuahuo@gmail.com
+  url: ''
+author_login: huahuoding
+author_email: dinghuahuo@gmail.com
+wordpress_id: 519
+wordpress_url: http://2nd.pipiyouyou.com/?p=519
+date: '2012-07-16 12:54:00 +0800'
+date_gmt: '2012-07-16 12:54:00 +0800'
+categories:
+- Uncategorized
+tags:
+- wordpress
+- 导航
+- 页面模板
+comments: []
+---
+<p>WordPress用了也快大半年了，忙着换主题安插件，却一直没把页面做好。</p>
+<p>想着从导航的每个分类下面点开，都是可以跟首页一样的格局，本应该是很简单的事情呀，可是小菜鸟一个，最终自个儿没折腾出来，还是得靠万能的搜索引擎帮忙。</p>
+<p>赶紧记录下：</p>
+<p>在Theme目录下找到page.php，复制一份，改名，比如要建的新页面名为Story, 为了区分，就起名为page-story.php，因为要和首页的布局一样，于是把index.php中的内容拷贝过来。然后在开头处添加这么一句</p>
+<pre><?php /* Template Name: Page-Story */?></pre>
+<p>然后找到如下语句：</p>
+<pre class="brush: php; gutter: true"><?php if (have_posts()) :  $first = true; ?></pre>
+<p>在这句前面添加如下内容：</p>
+<pre class="brush: php; gutter: true"><?php
+ $paged = (get_query_var(&#039;paged&#039;)) ?get_query_var(&#039;paged&#039;) : 1;
+ query_posts(&#039;cat=30&amp;showposts=10&#039;.&#039;&amp;paged=&#039; .$paged);
+ $wp_query->is_archive = true;
+ $wp_query->is_home = false;
+ ?></pre>
+<p>这里面的cat代表该页面下打算显示的分类目录的id，可在后台查询到。然后showposts表示一页显示的文章数。修改好后，保存。</p>
+<p>然后到后台－>页面－>新建页面，边上看到模板，下拉选择"page-story"，写好名称，保存。 基本上就大功告成啦！点开页面就能看到和首页一样的布局咯～</p>
+<p>导航栏上没有home(首页)看着有点儿怪，于是又开始折腾导航栏。后台－>外观－>菜单，然后新建一个菜单，取好名字，勾选&ldquo;加入所有顶级页面&rdquo;，左侧有个&ldquo;页面&rdquo;框，选到［查看所有］，把所需要的页面都勾上，关键是有我正在寻找的［首页］。保存菜单。</p>
+<p>刷新页面一看，首页也出来了，其他页面的导航也都安在⋯⋯(^_&minus;)&minus;☆</p>
+<p>虽然都是很基础的功能，还是欣慰下，希望我的wp越来越专业～</p>

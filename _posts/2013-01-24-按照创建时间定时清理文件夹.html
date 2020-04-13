@@ -1,0 +1,120 @@
+---
+layout: post
+status: publish
+published: true
+title: 按照创建时间定时清理文件夹
+author:
+  display_name: huahuoding
+  login: huahuoding
+  email: dinghuahuo@gmail.com
+  url: ''
+author_login: huahuoding
+author_email: dinghuahuo@gmail.com
+wordpress_id: 1207
+wordpress_url: http://about.huahuoding.com/?p=1207
+date: '2013-01-24 11:33:15 +0800'
+date_gmt: '2013-01-24 11:33:15 +0800'
+categories:
+- Uncategorized
+tags:
+- bat
+- cmd
+- forfiles
+- 定时
+comments: []
+---
+<p>还是工作中碰到的问题，有个存储系统上，每天会有一些链接错误的文件夹遗留在待处理的目录，这里以huahuoding为例。<br />
+需要定时清理掉，本来想得很复杂，打算用vb和windows shell来写了。</p>
+<p>后来网上搜到一个 forfiles命令，在windows server下可以用，windows 7也可以。很强大，参数及用法待会儿附到最后。<br />
+这里主要用到它的一个查找7天前的文件的功能，当然，这个7可以自定义。</p>
+<p>基本的语法是</p>
+<pre class="brush: actionscript3; gutter: true">FORFILES /P d:huahuoding /D -7 /C "CMD /C ECHO @PATH"</pre>
+<p>以下是利用forfiles来移动huadhuoding目录下面早于7天的子目录：</p>
+<pre class="brush: actionscript3; gutter: true">@ECHO OFF
+TITLE 每天晚上定时清理huahuoding文件夹
+
+SET scheduleH=2230
+
+:CURRENT
+ECHO 当前时间：%time:~0,2%%time:~3,2% 计划时间：%scheduleH% 清理时间：早于7天
+IF NOT EXIST D:TESTlogCLEAR_%DATE:~0,4%%DATE:~5,2%%DATE:~8,2%*.TXT (
+IF %time:~0,2%%time:~3,2% EQU %scheduleH% (
+FOR /F %%i IN (&#039;dir /a:D /b d:huahuoding&#039;) DO FORFILES /P d:huahuoding%%i /D -7 /C "CMD /C ECHO @PATH &amp; MOVE /Y @PATH d:TESTerrs" >> D:TESTlogCLEAR_%DATE:~0,4%%DATE:~5,2%%DATE:~8,2%%time:~0,2%%time:~3,2%%RANDOM%.TXT
+)
+)
+:NEXT
+CSCRIPT /nologo wait.js 30
+GOTO :CURRENT</pre>
+<p>－－－－－－－－－－－－－－－－－－－－－－－－－－</p>
+<pre class="brush: actionscript3; gutter: false">Forfiles
+
+语法
+
+forfiles [/p ] [/m ] [/s] [/c"<command></command>"] [/d [{+ |-}] [{ | }]]
+
+参数 说明
+/p 指定从其开始搜索的路径。 默认情况下搜索当前工作目录中启动。
+/m
+根据指定的搜索遮罩文件中搜索。 默认的搜索掩码是*。 *。
+/s
+指示搜索子目录以递归方式为forfiles命令。
+/c"<command></command>"
+<command></command> 每个文件上运行指定的命令。 应将命令字符串括在引号中。 缺省命令为"cmd /c 回显 @ 文件"。
+<command></command> /d [{+ |-}] [{ | }]
+<command></command> 选择文件与指定的时间段内的上次修改日期。
+<command></command> 选择的文件的上次修改日期晚于或等于 (+) 或早于或等于 (-) 指定的日期， +日期 - 格式 MM/DD/YYYY 在哪里。 日期+-
+
+选择文件的上次修改日期晚于或等于 (+) 与当前日期加上指定天数，或早于或等于 (-) 指定当前日期减去的天数。+- -
+
+天 天 的有效值范围 32，768 中包含任意数量。 如果没有指定，默认情况下使用+ 。
+
+/?
+在命令提示符下显示帮助。
+备注 Forfiles最常用在批处理文件中。
+Forfiles /s是类似于dir /s.
+您可以使用以下变量由/c命令行选项指定的命令字符串中。
+
+变量 说明
+@ FILE文件的名称。
+@ FNAME 不带扩展名的文件名。
+@ PATH 该文件的完整路径。
+@ RELPATH 该文件的相对路径。
+@ ISDIR 如果文件类型是一个目录，则值为 TRUE。 否则，此变量的值为 FALSE。
+@ FSIZE 文件大小以字节为单位）。
+@ FDATE 文件中的最后一次修改的日期戳。
+@ FTIME 文件中的最后一次修改的时间戳。
+与forfiles，可以在运行命令或将参数传递给多个文件。 例如，可以在树中带有.txt 文件扩展名的所有文件运行type命令。 或者您可能执行的每个批处理文件 （*.bat） 在驱动器 C 上的文件命名为"Myinput.txt"作为第一个参数。
+
+与forfiles，请执行下列任一操作：
+
+通过使用/d参数选择的绝对日期或相对日期的文件。
+
+通过使用变量，例如 @ FSIZE 中生成的文件归档树和 FDATE @。
+
+文件有别于目录使用 @ ISDIR变量。
+
+在命令行中包含特殊字符，使用 0xHH格式 （例如，0x09） 选项卡） 中的字符的十六进制代码。
+
+通过实施循环子目录标志工具，旨在处理单个文件 forfiles。
+
+示例
+要列出所有驱动器 C 上的批处理文件，请键入：
+
+forfiles /p c: /s /m *.bat /c"cmd /c 回显 @ 文件是一个批处理文件"
+
+若要列出所有驱动器 C 上的目录，请键入：
+
+forfiles /p c: /s /m *。 * /c"cmd /c = 如果 @ isdir = true 回显 @ 文件是一个目录"
+
+若要列出所有当前目录中至少一年以前的文件，请键入：
+
+forfiles /s /m *。 * /d-365 /c"cmd /c 回显 @ file 是至少一年以前。
+
+若要显示"文件已过时"早于 2007 年 1 月 1 日，在当前目录中的文件的每个文本键入：
+
+forfiles /s /m *。 * /d-01/01/2007年 /c"cmd /c 回显 @ file 是过时。
+
+要列出列格式的当前目录中的所有文件的文件扩展名，并添加在扩展名前的一个选项卡，请键入：
+
+forfiles /s /m *。 * /c"cmd /c 回显 @ 文件的扩展名是 0x09@ext"</pre>
+<p>来自：<a title="Forfiles" href="http://technet.microsoft.com/zh-cn/library/cc753551(v=ws.10).aspx" target="_blank">http://technet.microsoft.com/zh-cn/library/cc753551(v=ws.10).aspx</a></p>

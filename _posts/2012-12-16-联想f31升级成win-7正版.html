@@ -1,0 +1,49 @@
+---
+layout: post
+status: publish
+published: true
+title: 联想F31升级成Win 7正版
+author:
+  display_name: huahuoding
+  login: huahuoding
+  email: dinghuahuo@gmail.com
+  url: ''
+author_login: huahuoding
+author_email: dinghuahuo@gmail.com
+wordpress_id: 1162
+wordpress_url: http://2nd.pipiyouyou.com/?p=1162
+date: '2012-12-16 11:19:34 +0800'
+date_gmt: '2012-12-16 11:19:34 +0800'
+categories:
+- Uncategorized
+tags:
+- F31
+- SLIC
+- Win 7
+- 联想
+comments: []
+---
+<p>F31自带系统是vista home版，通过修改Bios的Marker就可以简单升级到win 7，不用费劲去刷Bios。网上也有很多资料和文章说这个，附件也是东拼西凑地好不容易找齐的，下载地址会罗列在文章最后。</p>
+<p>1. 查看SLIC信息：基本上不会错，保险起见，还是看一下。F31的SLIC版本应该是2.0。</p>
+<p>所需工具：SLIC Tookit 3.0</p>
+<p>方法步骤：打开SLIC Tookit 3.0，&ldquo;基本&rdquo;选卡下就可以看到当前本本的版本，如果还想要备份原OEM的序列号和证书，就点击&ldquo;高级&rdquo;->&ldquo;序列号与证书验证及备份&rdquo;，点击备份即可。（本来以为这步是必须的，实践证明，如果本本原来就是OEM正版的，装完Win 7就直接正版， 以后不用手动验证）</p>
+<p>&nbsp;</p>
+<p>2. 制作USB启动盘：用来引导进入Dos，运行修改Marker的脚本。</p>
+<p>所需工具: UltraISO, SLIC 2.1表文件中的setup98.img, F31.Marker</p>
+<p>方法步骤：<br />
+1). 装好UltraISO后，以管理员身份运行，然后打开setup98.img<br />
+2). 插上一个U盘，在"启动"下拉菜单中选择"写入硬盘镜像"<br />
+3). 在弹出窗口中选到你的U盘，写入方式为"USB-HDD+"，格式化后，点击写入<br />
+4). 将F31 Marker文件夹中所有文件拷入U盘</p>
+<p>3. 升级SLIC2.0至2.1<br />
+1). 刚才制作好的U盘插好，重启电脑，按F12，选择从USB启动<br />
+2). 进入Dos后，看屏幕提示是否是 C:>,不是的话在>后输入C:即可，是的话，直接输入dir，就可以看到刚才你放入U盘的文件列表了。<br />
+3). 先运行CW4SLP2C（这个脚本是清除旧的Marker），会出来进度条，过去之后自己会重启，同样的操作进入USB启动，然后运行CW4SLP2，同样运行完了会自己重启。<br />
+4). 开机后进入Windows按照我们前面说的第一步查看SLIC的方法，查看，这时候应该变成2.1了。</p>
+<p>4. 最后一步就是安装Win 7系统拉，这里就不赘述了。<br />
+以上仅在F31A机型亲测，其他请慎用。</p>
+<p>下载地址：<br />
+1). SLIC 2.1表文件: <a title="华为网盘" href="http://dl.vmall.com/c090c5x4f3" target="_blank">http://dl.vmall.com/c090c5x4f3</a><br />
+2). F31 Marker: <a title="华为网盘" href="http://dl.vmall.com/c090c5x4f3" target="_blank">http://dl.vmall.com/c0eideksxk</a><br />
+3). SLIC Tookit 3.0: <a title="华为网盘" href="http://dl.vmall.com/c090c5x4f3" target="_blank">http://dl.vmall.com/c0tud35tkv</a><br />
+4). UltraISO: <a title="华为网盘" href="http://dl.vmall.com/c090c5x4f3" target="_blank">http://dl.vmall.com/c047g9p9bs</a></p>

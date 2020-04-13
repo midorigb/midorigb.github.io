@@ -1,0 +1,40 @@
+---
+layout: post
+status: publish
+published: true
+title: IDS，IPS
+author:
+  display_name: huahuoding
+  login: huahuoding
+  email: dinghuahuo@gmail.com
+  url: ''
+author_login: huahuoding
+author_email: dinghuahuo@gmail.com
+wordpress_id: 67
+wordpress_url: http://pipiyouyou.com/blog/?p=67
+date: '2012-02-23 13:08:36 +0800'
+date_gmt: '2012-02-23 13:08:36 +0800'
+categories:
+- Uncategorized
+tags:
+- ISEC
+comments: []
+---
+<div><strong>入侵检测系统（Intrusion Detection System，简称IDS）</strong></div>
+<div></div>
+<div>职责：实时地监视、分析网络中所有的数据报文，发现并实时处理所捕获的数据报文；通过对IDS系统记录的网络事件进行统计分析，发现其中的异常现象，得出系统的安全状态，找出所需要的证据。</div>
+<div>IDS技术：异常检测(anomaly detection)也称为基于行为的检测，首先建立起用户的正常使用模式，即知识库；标识出不符合正常模式的行为活动。</p>
+<div>
+<div>滥用检测(misuse detection)也称为基于特征的检测，建立起已知攻击的知识库，判别当前行为活动是否符合已知的攻击模式。</div>
+<div></div>
+<div><strong>入侵防御系统（Intrusion Prevention System，简称IPS）</strong></div>
+<div>
+<p>IPS技术可以深度感知并检测流经的数据流量，对恶意报文进行丢弃以阻断攻击，对滥用报文进行限流以保护网络带宽资源。</p>
+<p>对于部署在数据转发路径上的IPS，可以根据预先设定的安全策略，对流经的每个报文进行深度检测（协议分析跟踪、特征匹配、流量统计分析、事件关联 分析等），如果一旦发现隐藏于其中网络攻击，可以根据该攻击的威胁级别立即采取抵御措施，这些措施包括（按照处理力度）：向管理中心告警；丢弃该报文；切 断此次应用会话；切断此次TCP连接。</p>
+<p><strong>IPS与IDS的区别</strong></p>
+<p>IPS对于初始者来说，是位于防火墙和网络的设备之间的设备。这样，如果检测到攻击，IPS会在这种攻击扩散到网络的其它地方之前阻止这个恶意的通信。而IDS只是存在于你的网络之外起到报警的作用，而不是在你的网络前面起到防御的作用。</p>
+<p>IPS检测攻击的方法也与IDS不同。一般来说，IPS系统都依靠对数据包的检测。IPS将检查入网的数据包，确定这种数据包的真正用途，然后决定是否允许这种数据包进入你的网络。</p>
+</div>
+</div>
+</div>
+<div></div>

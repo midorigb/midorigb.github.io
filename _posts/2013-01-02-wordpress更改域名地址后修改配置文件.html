@@ -1,0 +1,44 @@
+---
+layout: post
+status: publish
+published: true
+title: Wordpress更改域名地址后修改配置文件
+author:
+  display_name: huahuoding
+  login: huahuoding
+  email: dinghuahuo@gmail.com
+  url: ''
+author_login: huahuoding
+author_email: dinghuahuo@gmail.com
+wordpress_id: 1191
+wordpress_url: http://about.huahuoding.com/?p=1191
+date: '2013-01-02 04:25:09 +0800'
+date_gmt: '2013-01-02 04:25:09 +0800'
+categories:
+- Uncategorized
+tags:
+- wordpress
+- 域名
+- 配置
+comments: []
+---
+<p>新年新气象，启用新的域名咯，原来那个啊，就放着不打算续了。</p>
+<p>本来发了个邮件去询问主机修改域名的流程，神速地回复已经切换过去了，真有效率（;￣O￣）</p>
+<p>于是，wordpress访问不了了。。admin页面也进不了，总是重定向到原来的域名啊，又不能厚着脸皮让人家再改过来了，大元旦的7x24也不容易。</p>
+<p>问问万能的谷歌吧，出乎意外的顺利修改完了。mark下。</p>
+<p>牛人们都是通过修改数据库的，数据库的方法留到最后，先试试前台能否修改，找到三种方法，试了第一种就ok啦。</p>
+<p>第一种，修改wp-config.php</p>
+<p>1. 在wp-config.php中，添加以下两行内容：</p>
+<pre class="brush: php; gutter: true">define('WP_HOME','http://www.newdomain.com');
+define('WP_SITEURL','http://www.newdomain.com');</pre>
+<p>2.&nbsp;登录后台，在 &ldquo;常规 -> 设置&rdquo;重新配置新博客地址（HOME）和安装地址（SITEURL），成功后一定记得删除上面添加的内容。</p>
+<p>第二种，修改functions.php</p>
+<p>functions.php指的是位于当前博客主题目录内，可以自定义一些主题函数。</p>
+<p>1. 在functions.php中，添加以下两行内容：</p>
+<pre class="brush: php; gutter: true">update_option('siteurl','http://www.newdomain.com');
+update_option('home','http://www.newdomain.com');</pre>
+<p>2.&nbsp;登录后台，在 &ldquo;常规 -> 设置&rdquo;重新配置新博客地址（HOME）和安装地址（SITEURL），成功后一定记得删除上面添加的内容。</p>
+<p>第三种，修改wp-config.php（自动更新地址）</p>
+<p>1.&nbsp;在wp-config.php中，添加下面一行内容：</p>
+<pre class="brush: php; gutter: true">define('RELOCATE',true);</pre>
+<p>2. 登录后台地址，WP将自动更新安装地址（SITEURL），手动修改博客地址（HOME）地址即可，成功后一定记得删除上面添加的内容。</p>

@@ -1,0 +1,43 @@
+---
+layout: post
+status: publish
+published: true
+title: Chrome无法使用淘宝和支付宝控件的解决方法
+author:
+  display_name: huahuoding
+  login: huahuoding
+  email: dinghuahuo@gmail.com
+  url: ''
+author_login: huahuoding
+author_email: dinghuahuo@gmail.com
+wordpress_id: 1178
+wordpress_url: http://2nd.pipiyouyou.com/?p=1178
+date: '2012-12-24 11:43:37 +0800'
+date_gmt: '2012-12-24 11:43:37 +0800'
+categories:
+- Uncategorized
+tags:
+- Chrome
+- 支付宝
+- 淘宝
+comments: []
+---
+<p>Chrome 从版本 22 自动升级到 23，支付宝突然无法输入密码，提示要安装安全控件，另外受数字证书保护的某些页面，也提示找不到数字证书。折腾很久，从网上搜到了解决方法。（来自：http://blog.1001i.com/computer/chrome-alipay-secure-control-and-cert-install）</p>
+<p>解决方法如下：</p>
+<ol>
+<li>找到chrome的安装位置：在 chrome 的快捷方式图标上右键->属性->快捷方式->打开文件位置，会弹出 chrome 的安装目录；</li>
+<li>在 chrome 的安装目录下创建目录 plugins （如果已经有的话就跳过这一步），以下说的 plugins 目录即为此目录；</li>
+<li>进行以下步骤之前，确保已经安装了支付宝安全控件和淘宝数字证书控件（虽然他们目前无法使用，但是我们需要提取里面的一些文件）；</li>
+<li>复制几个文件，注意是复制，不要剪切（源文件 ==> 目的地）</li>
+</ol>
+<pre class="brush: actionscript3; gutter: true">C:WindowsSystem32aliedit3.1.0.0npaliedit.dll ==> plugins
+C:WindowsSystem32aliedit3.1.0.0npAliSecCtrl.dll ==> plugins
+C:WindowsSystem32itruscertNPComBrg701.dll ==> plugins
+C:Users你的当前Windows用户名AppDataRoamingalipaycfnpalicdo.dll ==> plugins</pre>
+<p>&nbsp;</p>
+<p>5. 关闭所有浏览器<br />
+6. 打开 chrome 浏览器，登录支付宝 www.alipay.com，这时候应该可以看到密码输入框了，登录进入支付宝，右上角点安全中心，找到数字证书，点进去安装数字证书。<br />
+7. 关闭所有浏览器，重新登陆支付宝，淘宝，应该已解决所有问题。</p>
+<p>&nbsp;</p>
+<p>小提示：以上目录根据系统不同，可能名称有所不同，比如 C:WindowsSystem32aliedit3.1.0.0 里的 3.1.0.0 可能是其他版本号。</p>
+<p><span style="font-size: medium;"><span style="line-height: 24px;">&nbsp;</span></span></p>

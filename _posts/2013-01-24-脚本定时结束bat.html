@@ -1,0 +1,53 @@
+---
+layout: post
+status: publish
+published: true
+title: 脚本定时结束BAT
+author:
+  display_name: huahuoding
+  login: huahuoding
+  email: dinghuahuo@gmail.com
+  url: ''
+author_login: huahuoding
+author_email: dinghuahuo@gmail.com
+wordpress_id: 1209
+wordpress_url: http://about.huahuoding.com/?p=1209
+date: '2013-01-24 11:14:09 +0800'
+date_gmt: '2013-01-24 11:14:09 +0800'
+categories:
+- Uncategorized
+tags:
+- bat
+- cmd
+- taskkill
+- tasklist
+- 定时
+comments: []
+---
+<p>因为发现服务器上定时运行的bat脚本出现session无法释放的问题，暂时没有定位到具体原因，先每天重启一下脚本强制释放。<br />
+由于服务器上运行了十几个脚本，进程都是cmd，所以需要通过title或者pid来结束对应的那个bat脚本。<br />
+首先，要先通过tasklist命令找到你运行的bat的window title，后面主要通过这个来找到需要结束的进程。</p>
+<pre class="brush: bash; gutter: true">@ECHO OFF
+TITLE 每天早上重启LINK脚本
+CD D:MYPROGRAM
+
+SET scheduleT=750 //有些服务器上的时间显示格式，hh:mm:ss之后，第一位还是空值，所以这里就从第二位开始取。
+
+:CURRENT
+ECHO 当前时间：%time:~1,1%%time:~3,2% 计划时间：%scheduleH%
+IF NOT EXIST D:MYPROGRAMlog%DATE:~0,4%%DATE:~5,2%%DATE:~8,2%*.TXT ( //正是因为前面设置了750这个时间，一天有两次，所以通过判断是否有log文件来避免运行第二次。
+IF %time:~1,1%%time:~3,2% EQU %scheduleT% (
+REM 如果你的程序需要时间退出，可以在这里写延时
+ECHO ------等待LINK线程退出------35秒--------
+CSCRIPT /nologo wait.js 35
+ECHO ------强制结束LINK进程-------
+TASKKILL /FI "WINDOWTITLE eq huahuoding的运行程序" > D:MYPROGRAMlog%DATE:~0,4%%DATE:~5,2%%DATE:~8,2%%time:~1,1%%time:~3,2%%RANDOM%.TXT
+ECHO ------重新运行LINK脚本-------
+START D:MYPROGRAMRUN_HUAHUODING.BAT
+ECHO DONE >> D:MYPROGRAMlog%DATE:~0,4%%DATE:~5,2%%DATE:~8,2%*.TXT
+)
+)
+:NEXT
+CSCRIPT /nologo wait.js 30
+GOTO :CURRENT</pre>
+<p>只是一个简单的功能，还有很多需要完善的地方，还是先尽快找到session无法释放的原因吧（;￣O￣）</p>

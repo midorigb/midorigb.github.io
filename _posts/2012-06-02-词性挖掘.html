@@ -1,0 +1,165 @@
+---
+layout: post
+status: publish
+published: true
+title: PHP词性挖掘
+author:
+  display_name: huahuoding
+  login: huahuoding
+  email: dinghuahuo@gmail.com
+  url: ''
+author_login: huahuoding
+author_email: dinghuahuo@gmail.com
+wordpress_id: 188
+wordpress_url: http://2nd.pipiyouyou.com/?p=188
+date: '2012-06-02 09:29:36 +0800'
+date_gmt: '2012-06-02 09:29:36 +0800'
+categories:
+- Uncategorized
+tags:
+- PHP
+- 分词
+- 数据挖掘
+comments: []
+---
+<p>Web数据挖掘实验，留这儿纪念下。</p>
+<p>基本目的：</p>
+<p>读入指定目录下的所有文本文件,对文本文件中的内容进行分词操作,在分词结果中找出形容词副词,按照指定格式输出到结果文件中。</p>
+<p>其中调用了scws的API（<a title="scws api" href="http://www.ftphp.com/scws/api.php" target="_blank">http://www.ftphp.com/scws/api.php</a>）</p>
+<p>{之前也试过phpanalysis2.0，分词速度很快，只是scws提供的接口比较多，如果只是分分词的话，phpanalysis2.0就足够了。}</p>
+<p>主要php代码如下:</p>
+<pre class="brush: php; gutter: true">
+<?php
+// 分词结果之回调函数 (param: 分好的词组成的数组)
+
+function words_cb($ar)
+
+{
+
+foreach ($ar as $tmp)
+
+{
+
+if ($tmp == "\n")
+
+{
+
+echo $tmp;
+
+continue;
+
+}
+
+echo $tmp . ' ';
+
+}
+
+flush();
+
+}
+
+// 实例化前的参数指定与读取
+
+$dict = 'dict/dict.xdb'; // 默认采用 xdb (不需其它任何依赖)
+
+$mydata = NULL; // 待切数据
+
+$version = 4; // 采用版本
+
+//$autodis = false; // 是否识别名字
+
+$ignore = true; // 是否忽略标点
+
+$level=1;//设定分词返回结果时是否复式分割
+
+$debug = false; // 是否为除错模式
+
+$stats = true; // 是否查看统计结果
+
+$is_cli = (php_sapi_name() == 'cli'); // 是否为 cli 运行环境
+
+// 实例化分词对像(mydata非空)
+
+$object = 'PSCWS' . $version;
+
+require ('bin/'.strtolower($object) . '.class.php');
+
+for($i=1;$i$value){
+
+$sample_text=$value;
+
+// 切分数据
+
+$mydata = stripslashes($sample_text);
+
+// 清除最后的 \r\n\t
+
+if (!is_null($mydata)) {
+
+$mydata = trim($mydata);
+
+}
+
+$cws = new PSCWS4('gbk');//设置编码为gbk
+
+$cws->set_dict($dict); //指定辞典文件
+
+$cws->set_rule('etc/rules.ini');
+
+$cws->set_ignore($ignore);
+
+$cws->set_multi($level);
+
+//$cws->set_duality('yes'); //是否为单音节词
+
+$cws->set_debug($debug);
+
+$cws->send_text($mydata);
+
+// 执行切分, 分词结果数组
+
+$stat_string = '';
+
+$head_string = '';
+
+$list = $cws->get_result();
+
+//$list = $cws->get_tops($list,100);
+
+$word_num = 0;
+
+foreach ($list as $k => $v)
+
+{ if(strpbrk($v['attr'],"ai")){ //只取形容词副词
+
+$position=$v['off']-10; //取前后上下文作为对照
+
+if($position<=0) {$position=0;}
+$stat_string .= sprintf("%-4d %-15s %-15s %-4d %-40s %-30f\r\n",$word_id+1,'2nd Round',$v['word'],$key,substr(str_replace("\n","",$mydata),$position,30),$v['idf']);
+//$word_num += $v['times'];
+$word_id+=1;
+}
+continue;
+}
+
+//将处理结果保存到数组
+$temp_string[$key]=$stat_string;
+}
+// 以下显示结果
+$head_string .= sprintf("%-4s %-15s %-15s %-8s %-35s %-40s\r\n", 'ID','UID','word-string', 'docid','content-string','probability');
+$fp=fopen("dest/result.txt",'w');
+fwrite($fp,$head_string);
+file_put_contents("dest/result.txt", $temp_string,FILE_APPEND);
+fclose($fp);
+echo "识别成功，请见dest文件夹下的结果文本";
+?>
+</pre>
+<p>期间修改项：</p>
+<ol>
+<li>sprintf函数的参数设置调整</li>
+<li>字符所在位置坐标选取</li>
+<li>直接输出改为存到数组后再输出</li>
+<li>词典选择</li>
+<li>pscws版本4的api与之前版本的差异</li>
+<li>词频计算并输出</li>
+</ol>

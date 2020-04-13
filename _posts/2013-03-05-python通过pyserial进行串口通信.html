@@ -1,0 +1,51 @@
+---
+layout: post
+status: publish
+published: true
+title: 通过PySerial进行串口通信
+author:
+  display_name: huahuoding
+  login: huahuoding
+  email: dinghuahuo@gmail.com
+  url: ''
+author_login: huahuoding
+author_email: dinghuahuo@gmail.com
+wordpress_id: 551
+wordpress_url: http://2nd.pipiyouyou.com/?p=551
+date: '2013-03-05 03:56:55 +0800'
+date_gmt: '2013-03-05 03:56:55 +0800'
+categories:
+- Uncategorized
+tags:
+- board
+- pyserial
+- Python
+- serial
+comments: []
+---
+<p>工具：Python 3.2.3 with pyserial-2.6</p>
+<p>API地址：<a href="http://pyserial.sourceforge.net/pyserial_api.html">http://pyserial.sourceforge.net/pyserial_api.html</a></p>
+<p>关键点：</p>
+<pre class="brush: python; gutter: false">
+//Configure
+try:
+    relay=serial.Serial(port=&#039;COM5&#039;, baudrate=&#039;9600&#039;, bytesize=8,parity=&#039;N&#039;,stopbits=1)
+except Exception as ex:
+    print("Failed to create a serial port on port:", relay)
+    raise ex
+print(relay)
+HEX Transfer
+bytes.fromhex(&#039;FF 01 00 01 EE&#039;)
+//Open port
+try:
+     if relay.isOpen()==False:
+        relay.open()
+    except Exception as ex:
+        print("Failed to initial")
+        raise ex
+//Close port
+relay.close()
+//Write
+relay.write(w_char)
+//Read
+relay.read(8)</pre>

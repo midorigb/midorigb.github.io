@@ -1,0 +1,35 @@
+---
+layout: post
+status: publish
+published: true
+title: 如何修改wordpress的浏览器图标
+author:
+  display_name: huahuoding
+  login: huahuoding
+  email: dinghuahuo@gmail.com
+  url: ''
+author_login: huahuoding
+author_email: dinghuahuo@gmail.com
+wordpress_id: 1223
+wordpress_url: http://about.huahuoding.com/?p=1223
+date: '2013-01-24 13:31:46 +0800'
+date_gmt: '2013-01-24 13:31:46 +0800'
+categories:
+- Uncategorized
+tags:
+- favicon
+- wordpress
+- 图标
+comments: []
+---
+<p>先准备好一个图标，网上有很多在线生成的工具，或者直接google图片也行。重命名为favicon.ico<br />
+然后登录wordpress后台，外观->编辑，找到当前主题的header文件。</p>
+<p>按照网上说的方法，没有找到：</p>
+<pre class="brush: html; gutter: false"><link title="" rel="shortcut icon" /></pre>
+<p>于是就在</p>
+<pre class="brush: html; gutter: false"></title></pre>
+<p>之后，也就是</p>
+<pre class="brush: html; gutter: false"><link rel="pingback"/></pre>
+<p>之前，加入如下代码：</p>
+<pre class="brush: html; gutter: false"><link rel="shortcut icon" href="<?php bloginfo(&#039;template_directory&#039;); ?>/favicon.ico"/></pre>
+<p>刷新浏览器就可以了。</p>

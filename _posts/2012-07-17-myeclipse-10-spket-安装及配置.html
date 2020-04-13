@@ -1,0 +1,39 @@
+---
+layout: post
+status: publish
+published: true
+title: MyEclipse 10 spket 安装及配置
+author:
+  display_name: huahuoding
+  login: huahuoding
+  email: dinghuahuo@gmail.com
+  url: ''
+author_login: huahuoding
+author_email: dinghuahuo@gmail.com
+wordpress_id: 533
+wordpress_url: http://2nd.pipiyouyou.com/?p=533
+date: '2012-07-17 15:17:33 +0800'
+date_gmt: '2012-07-17 15:17:33 +0800'
+categories:
+- Uncategorized
+tags:
+- extjs
+- jQuery
+- MyEclipse
+- spket
+- 开发环境
+comments: []
+---
+<p>Spket IDE可以提供对ext js和jQuery api的提示。</p>
+<p>通过Configuration center的software update一直提示错误，可能是MBP上装的这个版本有点问题...最终只能手动安装了~</p>
+<p>安装过程如下：</p>
+<p>1. 去Spket的网站下载压缩包&nbsp;<a title="http://www.spket.com/download.html" href="http://www.spket.com/download.html" target="_blank">http://www.spket.com/download.html</a>（网上搜来的很多是基于spket-1.6.23.jar来做的，今天也不知道怎么搞的，很多国外网站都抽风了，当然也包括俺的这个－－，jar文件一直都不能完整地下载下来，于是就开始折腾别的办法），找到<a href="http://www.agpad.com/downloads/spket-update-1.6.23.zip">Archived Update Site</a>，把压缩包下载下来，并解压。你会看到有两个文件夹和1个xml文件。</p>
+<p>2. 找到MyEclipse的安装目录－>MyEclipse 10 Drop-ins－>dropins(这是个快捷方式，不过不影响，直接打开)，将解压出来的那两个文件夹"features""plugins"复制过来。</p>
+<p>3. 打开MyEclipse，会出现一个提示，大概意思是导入了那些com...文件，这就代表成功了。</p>
+<p>4. 配置spket.</p>
+<p>MyEclipse－>Preferences，找到spket－>JavaScript Profiles－>New， 输入&ldquo;ExtJS&rdquo;点击OK；</p>
+<p>选择&ldquo;ExtJS&rdquo; 并点击&ldquo;Add Library&rdquo;然后在下拉条中选取&ldquo;ExtJS&rdquo;；</p>
+<p>选择 &ldquo;ExtJS&rdquo;并点击&ldquo;Add File&rdquo;，然后在你的extjs/source目录中选取&ldquo;ext.jsb2&rdquo; 文件；</p>
+<p>点击对话框右手边的&ldquo;Defalut&rdquo;按钮。</p>
+<p>［懒得再截图了，于是用了<a title="百度空间" href="http://hi.baidu.com/%BF%AA%D0%C4%BE%CD%BA%C3_999/home" target="_blank">http://hi.baidu.com/%BF%AA%D0%C4%BE%CD%BA%C3_999/home</a>&nbsp;TX的图⋯⋯(^_^)］</p>
+<p>jQuery的设置也是一样，只是把extjs中&ldquo;add file&rdquo;那步中的文件选到你下载好的jquery.js就OK啦！</p>

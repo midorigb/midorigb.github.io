@@ -1,0 +1,88 @@
+---
+layout: post
+status: publish
+published: true
+title: 批量获取gmail所有附件
+author:
+  display_name: huahuoding
+  login: huahuoding
+  email: dinghuahuo@gmail.com
+  url: ''
+author_login: huahuoding
+author_email: dinghuahuo@gmail.com
+wordpress_id: 118
+wordpress_url: http://pipiyouyou.com/blog/?p=118
+date: '2012-03-27 13:45:41 +0800'
+date_gmt: '2012-03-27 13:45:41 +0800'
+categories:
+- Uncategorized
+tags:
+- Gmail
+- Python
+- 附件
+comments: []
+---
+<p>因为要找某个订阅邮箱发过来的音频材料，于是就动手练了练Python，比较简陋的功能：<br />
+输入用户名，账号以及对方的邮件地址，然后就逐封POP3读取邮件，并将附件保存到本地。</p>
+<p>最后，通过Pyinstaller将.Py转成通用的.EXE执行文件。<br />
+后续，还可以做其他功能的扩展，比如抓取主题中包含某关键字的邮件信息，批量发送邮件等。</p>
+<pre class="brush: python; gutter: true;>
+##Fetching gmail's attachment of specialized sender.
+
+import poplib
+import cStringIO
+import email
+import email.Header
+import base64,os
+import getpass
+
+#POP3
+pop_conn = poplib.POP3_SSL('pop.gmail.com')
+os.chdir('.')# directory where to save attachments (default: current)
+user = raw_input("Enter your GMail username:")
+pwd = getpass.getpass("Enter your password: ")
+pop_conn.user(user)
+pop_conn.pass_(pwd)
+fadr = raw_input("Enter the sender's mail address:")
+
+fadr='<'+fadr+'>'
+
+#Print how many new emails
+numMessages = len(pop_conn.list()[1])
+print 'num of messages', numMessages
+
+for i in range(numMessages):    
+    m = pop_conn.retr(i+1)
+
+    buf = cStringIO.StringIO()
+    for j in m[1]:        
+        print >>buf, j
+    buf.seek(0)
+
+    #Analysis the mail content and download attachment
+    msg = email.message_from_file(buf)
+    sender=msg.get('From')
+    h = email.Header.Header(sender)
+    dhs = email.Header.decode_header(h)
+    for dh in dhs:
+        print dh
+    #sender = dh[1][0]
+    #print sender
+    #print fadr
+    if sender==fadr:
+        for part in msg.walk():
+            contenttype=part.get('content-Disposition')
+            filename=email.Header.decode_header(part.get_filename())
+
+            if filename and contenttype and contenttype[0:10]=='attachement':
+                filename=os.path.basename(filename[0][0])
+                #print contenttype[0:10],filename
+                print filename
+            f = open(filename,'wb')
+            f.write(part.get_payload(decode=True))
+            f.close()
+    else:
+        continue
+pop_conn.quit()
+print 'exit'
+</pre>

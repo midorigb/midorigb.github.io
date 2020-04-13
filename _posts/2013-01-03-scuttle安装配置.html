@@ -1,0 +1,37 @@
+---
+layout: post
+status: publish
+published: true
+title: Scuttle安装配置
+author:
+  display_name: huahuoding
+  login: huahuoding
+  email: dinghuahuo@gmail.com
+  url: ''
+author_login: huahuoding
+author_email: dinghuahuo@gmail.com
+wordpress_id: 1197
+wordpress_url: http://about.huahuoding.com/?p=1197
+date: '2013-01-03 05:23:04 +0800'
+date_gmt: '2013-01-03 05:23:04 +0800'
+categories:
+- Uncategorized
+tags:
+- Scutter
+- 书签
+- 开源
+comments: []
+---
+<p>Scuttle是一款开源的网络书签系统，使用php开发，支持MySQL等数据库。</p>
+<p>项目主页：<a href="http://sourceforge.net/projects/scuttle/">http://sourceforge.net/projects/scuttle/</a></p>
+<p>下载地址：<a href="http://sourceforge.net/projects/scuttle/files/scuttle/">http://sourceforge.net/projects/scuttle/files/scuttle/</a></p>
+<p>软件大小：318.8KB</p>
+<p>操作系统：Windows，Linux</p>
+<p>1. 压缩包下载后，解压出来，改个名字吧，叫bookmark好了。</p>
+<p>2. 进入你的mysql数据库后台，创建一个新的数据库或者使用现有的数据库。这一步之后，记下你想要分配给scuttle用的数据库名称、用户名、密码，后面要用。</p>
+<p>3. 复制文件夹里的config.inc.php.example文件，并重命名为config.inc.php。</p>
+<p>4. 修改config.inc.php，$dbuser，$dbpass，$dbname 这三个参数改成第二步你设定的值。</p>
+<p>5. 修改config.inc.php，将$locale的值从en_GB修改为zh_CN，以便支持中文。</p>
+<p>6. 进入你的mysql数据库后台，创建数据表（使用Scuttle文件夹下的tables.sql创建）</p>
+<p>7. 将bookmark文件夹上传到你的wwwroot。</p>
+<p>8. 这时候，在浏览器里输入 http://www.yourdomain.com/bookmark, 应该就可以访问了。</p>

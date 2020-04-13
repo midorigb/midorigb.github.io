@@ -1,0 +1,78 @@
+---
+layout: post
+status: publish
+published: true
+title: XSLT学习心得
+author:
+  display_name: huahuoding
+  login: huahuoding
+  email: dinghuahuo@gmail.com
+  url: ''
+author_login: huahuoding
+author_email: dinghuahuo@gmail.com
+wordpress_id: 1279
+wordpress_url: http://about.huahuoding.com/?p=1279
+date: '2013-03-05 04:38:02 +0800'
+date_gmt: '2013-03-05 04:38:02 +0800'
+categories:
+- Uncategorized
+tags:
+- excel
+- xml
+- xsl
+- xslt
+comments: []
+---
+<p>一直没接触过xsl，这次需要通过xsl将一个xml转换成预定义格式的Excel表。</p>
+<p>于是就去<a title="w3school" href="http://www.w3school.com.cn/xsl/xsl_languages.asp" target="_blank">w3school</a>先把xsl,xslt,xpath等过了一遍，期间遇到的问题也不少，就不赘述了。要点记录如下，以便日后查询。</p>
+<p>实例：</p>
+<p>用到的语法</p>
+<p>其中第5条的目的是更改单元格格式，主要是因为Excel中，如果格式是数字的时候，若值为空的时候默认会有&ldquo;0&rdquo;或者其他设定的格式（比如&ldquo;-&rdquo;）出现，我是想保留空白，格式改成文本就没这个问题。</p>
+<p>第6条看上去很简单，费了好大周折。主要目的是统计图片个数，也就是说统计4个图片节点中非空个数。由于xsl中的变量相当于常量，一旦赋值之后就没办法改变了。中间尝试了模板函数，字符串各种变形。。。最后同事一语惊醒梦中人啊，咱就是缺一个把bool转成0,1的函数嘛～于是找到了number，圆满了。</p>
+<pre class="brush: xslt; gutter: false">
+<xsl:processing-instruction name="mso-application">    
+<xsl:text>progid="Excel.Sheet"</xsl:text>
+</xsl:processing-instruction>
+<xsl:value-of select="Id"/>
+<xsl:for-each select="ROOT/APPLICATION">
+<xsl:value-of select="substring(AppTime,0,11)"/>
+<Data>
+<xsl:choose>
+<xsl:when test="AppAmount=''">
+<xsl:attribute name="ss:Type">String</xsl:attribute>
+</xsl:when> 
+<xsl:when test="AppAmount!=''">
+<xsl:attribute name="ss:Type">Number</xsl:attribute>
+</xsl:when>
+</xsl:choose> 
+<xsl:value-of select="AppAmount"/>
+</Data>
+<xsl:choose>
+<xsl:when test="Picture1='' and Picture2='' and Picture3='' and Picture4=''">
+<xsl:attribute name="ss:Type">String</xsl:attribute>
+</xsl:when> 
+<xsl:otherwise>
+<xsl:attribute name="ss:Type">Number</xsl:attribute>
+<xsl:value-of select="number(contains(Picture1,'JPG'))+number(contains(Picture2,'JPG'))+number(contains(Picture3,'JPG'))+number(contains(Picture4,'JPG'))"/>                          
+</xsl:otherwise>
+</xsl:choose>
+</pre>
+<p>最后来列一下比较简单讨巧的转换步骤：<br />
+1. 新建Excel表，调格式，录入测试数据，另存为.XML类型的文件<br />
+2. 将文件后缀改为.XLS<br />
+3. 用编辑器打开该文件，另存为一份.XSL文件<br />
+4. 加上头尾</p>
+<pre class="brush: xslt; gutter: false">
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:output method="xml" indent="yes"/>
+<xsl:template match="/">
+<xsl:processing-instruction name="mso-application">
+<xsl:text>progid="Excel.Sheet"</xsl:text>
+</xsl:processing-instruction>
+</pre>
+<p>5. 修改
+<pre class="brush: xslt; gutter: false"><DATA></pre>
+<p>6. 注意
+<pre class="brush: xslt; gutter: false"><Table ss:ExpandedRowCount="22"></pre>
+<p>属性，要么留空，要么把正确的行数填进去</p>
