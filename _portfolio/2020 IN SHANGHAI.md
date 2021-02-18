@@ -1,6 +1,6 @@
 ---
-title: "Foo Bar Identity"
-excerpt: "Foo Bar design system including logo mark, website design, and branding applications."
+title: "2020 IN SHANGHAI"
+excerpt: "Street photographing in Shanghai of Year2020."
 header:
   image: /assets/images/foo-bar-identity.jpg
   teaser: /assets/images/foo-bar-identity-th.jpg
