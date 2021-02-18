@@ -24,7 +24,7 @@ locale                   : "zh-CN"
 title                    : "Ding's Blog"
 title_separator          : "-"
 # site tagline that appears below site title in masthead
-subtitle                 : "Photographer | Painter | Writer | ITer"
+subtitle                 : "ITer | Writer | Photographer | Painter "
 name                     : "Ding"
 description              : "About Ding"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
