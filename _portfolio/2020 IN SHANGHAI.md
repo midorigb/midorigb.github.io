@@ -5,7 +5,7 @@ header:
   image: /assets/images/foo-bar-identity.jpg
   teaser: /assets/images/foo-bar-identity-th.jpg
 sidebar:
-  - title: "Role"
+  - title: "Camera"
     image: http://placehold.it/350x250
     image_alt: "logo"
     text: "Designer, Front-End Developer"
