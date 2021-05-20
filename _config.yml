@@ -24,7 +24,7 @@ locale                   : "zh-CN"
 title                    : "Ding's Blog"
 title_separator          : "-"
 # site tagline that appears below site title in masthead
-subtitle                 : "Photographer | Painter | Writer | ITer"
+subtitle                 : "ITer | Writer | Photographer | Painter "
 name                     : "Ding"
 description              : "About Ding"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
@@ -310,7 +310,15 @@ defaults:
     values:
       layout: single
       author_profile: true
-  # _portfolio
+ # _categories
+  - scope:
+      path: ""
+      type: categories
+    values:
+      layout: single
+      author_profile: false
+      share: true
+ # _portfolio
   - scope:
       path: ""
       type: portfolio
@@ -318,4 +326,3 @@ defaults:
       layout: single
       author_profile: false
       share: true
-
